@@ -1,7 +1,6 @@
 package main
 
 import (
-	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -33,15 +32,23 @@ func main() {
 		check(err)
 		l2 = append(l2, v2)
 	}
+
 	sort.Slice(l1, func(i, j int) bool { return l1[i] < l1[j] })
 	sort.Slice(l2, func(i, j int) bool { return l2[i] < l2[j] })
-	
-	res := []float64{}
+
+	res := []int{}
 	for i, _ := range l1 {
-		res = append(res, math.Abs(float64(l1[i] - l2[i])))
+		count := 0
+		for j, _ := range l2 {
+			if l1[i] == l2[j] {
+				count++
+			}
+		}
+		res = append(res, count * l1[i])
 	}
+
 	
-	final_value := 0.0
+	final_value := 0
 	for _, v := range res {
 		final_value += v
 	}
